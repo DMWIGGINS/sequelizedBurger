@@ -1,0 +1,58 @@
+body {
+    background-image: url(../img/blueburger.jpg);
+    font-family: 'Dosis', sans-serif;
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Abril Fatface', cursive;
+    font-size: 80px;
+    border: 1px solid black;
+    outline-style: double;
+    outline-color: green;
+    background-color: rgb(40, 212, 40);
+}
+
+h2 {
+    text-align: center;
+}
+
+.eatBurger {
+    background-color: rgb(0, 153, 255);
+    font-family: 'Dosis', sans-serif;
+}
+
+#showBurgers {
+    border-style: solid;
+    border-color: lightblue;
+    width: 500px;
+    margin-left: 90px;
+    background-color: yellow;
+    float: left;
+    font-family: 'Dosis', sans-serif;
+}
+
+#devouredBurgers {
+    border-style: solid;
+    border-color: lightblue;
+    width: 500px;
+    margin-right: 90px;
+    float: right;
+    background-color: brown;
+    font-family: 'Dosis', sans-serif;
+    padding-bottom: 120px;
+}
+
+#newBurger {
+    border-style: solid;
+    border-color: lightblue;
+    text-align: center;
+    background-color: yellow;
+    width: 500px;
+    margin-left: 90px;
+    padding-bottom: 20px;
+}
+
+.addBurger {
+    background-color: rgb(40, 212, 40);
+}
