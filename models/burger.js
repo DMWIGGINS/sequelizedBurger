@@ -23,7 +23,7 @@ module.exports = function (sequelize, DataTypes) {
 
 
 
-module.exports = Burger;
+// module.exports = Burger;
 
 
 

@@ -10,7 +10,7 @@ $(function () {
                 };
 
                 // Send the POST request.
-                $.ajax("/api/burgers", {
+                $.ajax("/api/burgers/new", {
                     type: "POST",
                     data: newBurger
                 }).then(
