@@ -3,20 +3,12 @@ var db = require("../models");
 var router = express.Router();
 
 
-var burger = require("../models/burger.js");
-
-
 function readyBurgers(req, res) {
-
+  console.log("I'm in function readyBurgers");
   var readyBurger = [];
-  db.Burger.findAll({
-    where: {
-      devoured: false
-    },
-    order: ["createdAt"]
-  }).then(function (data, err) {
+  db.Burger.findAll({}).then(function (data, err) {
     if (err) {
-      res.status().end();
+      res.status(500).end();
     } else if (data[0]) {
       var burgerObject = [];
       for (let i = 0; i < data.length; i++) {
@@ -26,9 +18,8 @@ function readyBurgers(req, res) {
         }
         readyBurger.push(burgerObject);
       }
-      res.render("index", {
-        readyBurger: readyBurger
-      });
+      console.log(readyBurger);
+      res.render("index", readyBurger);
     } else {
       res.render("index", {
         readyBurger: []
@@ -76,6 +67,10 @@ function burgerEat(req, res) {
   });
 }
 
+router.get("/", function (req, res) {
+  readyBurgers(req, res);
+});
+
 router.get("/burgers", function (req, res) {
   readyBurgers(req, res);
 });
@@ -83,7 +78,6 @@ router.get("/burgers", function (req, res) {
 router.post("/api/burgers/new", function (req, res) {
   burgerCreate(req, res);
 });
-
 
 router.put("/api/burgers/:id", function (req, res) {
   console.log("made it to router");
