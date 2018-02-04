@@ -27,6 +27,8 @@
     "handlebars-helper-css": "^0.1.0",
     "method-override": "^2.3.10",
     "mysql": "^2.15.0",
+    "mysql2": "^1.5.1",
+    "nodemon": "^1.14.12",
     "sequelize": "^4.32.3"
   }
 }
