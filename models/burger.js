@@ -11,7 +11,8 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             default: false
-        }
+        },
+         
     });
     console.log("about to exit models");
     return Burger;

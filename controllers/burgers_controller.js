@@ -10,30 +10,38 @@ function readyBurgers(req, res) {
     if (err) {
       res.status(500).end();
     } else if (data[0]) {
-      var burgerObject = [];
-      for (let i = 0; i < data.length; i++) {
-        burgerObject = {
-          id: data[i].id,
-          burger_name: data[i].burger_name,
-        }
-        readyBurger.push(burgerObject);
+      var burgerList = {
+        burgers: data
       }
-      console.log(readyBurger);
-      res.render("index", readyBurger);
-    } else {
-      res.render("index", {
-        readyBurger: []
-      });
+      // var burgerObject = [];
+      // for (let i = 0; i < data.length; i++) {
+      //   burgerObject = {
+      //     id: data[i].id,
+      //     burger_name: data[i].burger_name,
+      //     devoured: data[i].devoured,
+      //   }
+      //   readyBurger.push(burgerObject);
+      // }
+      // console.log(readyBurger);
+      // res.render("index", {
+      //   readyBurger: readyBurger
+      // });
     }
+    res.render("index", burgerList);
   });
 }
 
+
+
 function burgerCreate(req, res) {
+  console.log("I'm in burgerCreate");
+  console.log(req.body.name);
   db.Burger.create({
-      burger_name: req.body.burger_name,
+      burger_name: req.body.name,
       devoured: false
     })
     .then(function (data, err) {
+      console.log(data);
       if (data) {
         res.status(200).end();
       } else if (err) {
@@ -44,22 +52,23 @@ function burgerCreate(req, res) {
 }
 
 function burgerEat(req, res) {
+  console.log("I'm in burgerEat");
   db.Burger.update({
     devoured: true
   }, {
     where: {
-      id: {
-        $eq: req.body.id
-      }
+      id: req.params.id
     }
   }).then(function (data, err) {
+    console.log("I'm out of the database");
     console.log(data);
+    console.log(data[0]);
     if (err) {
       // If an error occurred, send a generic server failure
       console.log("an error occurred");
       console.log(err);
       res.status(500).end();
-    } else if (data[0]) {
+    } else if (data) {
       console.log("burger is updated");
       readyBurgers(req, res);
       // res.status(200).end();
@@ -75,7 +84,7 @@ router.get("/burgers", function (req, res) {
   readyBurgers(req, res);
 });
 
-router.post("/api/burgers/new", function (req, res) {
+router.post("/api/burgers", function (req, res) {
   burgerCreate(req, res);
 });
 
