@@ -1,5 +1,5 @@
 {
-  "name": "eat-da-burger",
+  "name": "sequelizedburger",
   "version": "1.0.0",
   "description": "create your own burgers and eat them",
   "main": "server.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DMWIGGINS/Eat-Da-Burger.git"
+    "url": "git+https://github.com/DMWIGGINS/sequelizedBurger.git"
   },
   "keywords": [
     "burger",
@@ -26,6 +26,9 @@
     "express-handlebars": "^3.0.0",
     "handlebars-helper-css": "^0.1.0",
     "method-override": "^2.3.10",
-    "mysql": "^2.15.0"
+    "mysql": "^2.15.0",
+    "mysql2": "^1.5.1",
+    "nodemon": "^1.14.12",
+    "sequelize": "^4.32.3"
   }
 }

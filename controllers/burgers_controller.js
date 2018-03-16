@@ -1,49 +1,96 @@
 var express = require("express");
-
+var db = require("../models");
 var router = express.Router();
 
 
-var burger = require("../models/burger.js");
-
-
-
-router.get("/", function (req, res) {
-  burger.all(function (data) {
-    console.log("what is data" + data);
-    var burgerList = {
-      burgers: data
+function readyBurgers(req, res) {
+  console.log("I'm in function readyBurgers");
+  var readyBurger = [];
+  db.Burger.findAll({}).then(function (data, err) {
+    if (err) {
+      res.status(500).end();
+    } else if (data[0]) {
+      var burgerList = {
+        burgers: data
+      }
+      // var burgerObject = [];
+      // for (let i = 0; i < data.length; i++) {
+      //   burgerObject = {
+      //     id: data[i].id,
+      //     burger_name: data[i].burger_name,
+      //     devoured: data[i].devoured,
+      //   }
+      //   readyBurger.push(burgerObject);
+      // }
+      // console.log(readyBurger);
+      // res.render("index", {
+      //   readyBurger: readyBurger
+      // });
     }
-
-    console.log("data is: " + res);
-    console.log(burgerList);
     res.render("index", burgerList);
   });
+}
+
+
+
+function burgerCreate(req, res) {
+  console.log("I'm in burgerCreate");
+  console.log(req.body.name);
+  db.Burger.create({
+      burger_name: req.body.name,
+      devoured: false
+    })
+    .then(function (data, err) {
+      console.log(data);
+      if (data) {
+        res.status(200).end();
+      } else if (err) {
+        res.status(500).end();
+      }
+    });
+  readyBurgers(res);
+}
+
+function burgerEat(req, res) {
+  console.log("I'm in burgerEat");
+  db.Burger.update({
+    devoured: true
+  }, {
+    where: {
+      id: req.params.id
+    }
+  }).then(function (data, err) {
+    console.log("I'm out of the database");
+    console.log(data);
+    console.log(data[0]);
+    if (err) {
+      // If an error occurred, send a generic server failure
+      console.log("an error occurred");
+      console.log(err);
+      res.status(500).end();
+    } else if (data) {
+      console.log("burger is updated");
+      readyBurgers(req, res);
+      // res.status(200).end();
+    }
+  });
+}
+
+router.get("/", function (req, res) {
+  readyBurgers(req, res);
+});
+
+router.get("/burgers", function (req, res) {
+  readyBurgers(req, res);
 });
 
 router.post("/api/burgers", function (req, res) {
-  
-  burger.insertOne(["burger_name"], [req.body.name], function (result) {
-    res.json({
-      id: result.insertId
-    });
-  });
+  burgerCreate(req, res);
 });
 
 router.put("/api/burgers/:id", function (req, res) {
   console.log("made it to router");
-  var condition = "id = " + req.params.id;
-
-  console.log("condition", condition);
-
-  burger.updateOne({
-    devoured: req.body.devoured
-  }, condition, function (result) {
-    if (result.changedRows == 0) {
-      return res.status(404).end();
-    } else {
-      res.status(200).end();
-    }
-  });
+  burgerEat(req, res);
 });
 
 module.exports = router;
