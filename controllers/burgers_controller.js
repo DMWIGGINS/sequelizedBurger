@@ -1,36 +1,22 @@
 var express = require("express");
 var db = require("../models");
 var router = express.Router();
-
+var sequelize = require("sequelize");
 
 function readyBurgers(req, res) {
   console.log("I'm in function readyBurgers");
   var readyBurger = [];
-  db.Burger.findAll({}).then(function (data, err) {
+  db.Burger.findAll({order: sequelize.col('burger_name')}).then(function (data, err) {
     if (err) {
       res.status(500).end();
     } else if (data[0]) {
       var burgerList = {
         burgers: data
       }
-      // var burgerObject = [];
-      // for (let i = 0; i < data.length; i++) {
-      //   burgerObject = {
-      //     id: data[i].id,
-      //     burger_name: data[i].burger_name,
-      //     devoured: data[i].devoured,
-      //   }
-      //   readyBurger.push(burgerObject);
-      // }
-      // console.log(readyBurger);
-      // res.render("index", {
-      //   readyBurger: readyBurger
-      // });
     }
     res.render("index", burgerList);
   });
 }
-
 
 
 function burgerCreate(req, res) {
