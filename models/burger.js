@@ -12,6 +12,11 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             default: false
         },
+        createdAt: {
+          type: DataTypes.DATE,
+          allowNull: false,
+          default: TIME_STAMP
+        }
          
     });
     console.log("about to exit models");
