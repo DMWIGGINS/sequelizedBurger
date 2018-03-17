@@ -6,7 +6,7 @@ var app = express();
 var method = methodOverride();
 var sequelize = require("sequelize");
 
-var PORT = process.env.JAWSDB_URL || 8080;
+var PORT = process.env.PORT || 8080;
 
 app.use(express.static("public"));
 
